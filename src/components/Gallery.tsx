@@ -196,6 +196,42 @@ export function Gallery() {
     };
   }, [lightboxIndex, closeLightbox, goLightbox]);
 
+  /*
+   * Kolečkem myši / gestem na trackpadu se dá v lightboxu přepínat mezi
+   * fotkami stejně jako šipkami. Jeden „cvak" kolečka pošle spoustu
+   * drobných wheel událostí najednou — bez chvilkového zámku by to
+   * přeskočilo rovnou o několik fotek.
+   */
+  const wheelLocked = useRef(false);
+
+  function onLightboxWheel(e: React.WheelEvent) {
+    if (wheelLocked.current) return;
+    const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    if (Math.abs(delta) < 12) return;
+
+    wheelLocked.current = true;
+    goLightbox(delta > 0 ? 1 : -1);
+    window.setTimeout(() => {
+      wheelLocked.current = false;
+    }, 350);
+  }
+
+  /* Swipe prstem na dotykových zařízeních — doleva další, doprava předchozí. */
+  const touchStartX = useRef<number | null>(null);
+
+  function onLightboxTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches.length === 1 ? e.touches[0].clientX : null;
+  }
+
+  function onLightboxTouchEnd(e: React.TouchEvent) {
+    if (touchStartX.current === null) return;
+    const endX = e.changedTouches[0]?.clientX ?? touchStartX.current;
+    const delta = endX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(delta) < 40) return;
+    goLightbox(delta < 0 ? 1 : -1);
+  }
+
   return (
     <section id="galerie" className="bg-cream py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -295,6 +331,9 @@ export function Gallery() {
           aria-modal="true"
           aria-label={active.alt}
           onClick={closeLightbox}
+          onWheel={onLightboxWheel}
+          onTouchStart={onLightboxTouchStart}
+          onTouchEnd={onLightboxTouchEnd}
         >
           <button
             type="button"

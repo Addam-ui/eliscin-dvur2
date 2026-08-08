@@ -56,7 +56,7 @@ export default async function HouseRulePage({ params }: PageProps) {
           </a>
         )}
 
-        <ul className="mt-10 space-y-3.5 border-t border-linen pt-10">
+        <ul className="mt-10 space-y-3 border-t border-linen pt-10">
           {doc.rules.map((rule, i) => (
             <li
               key={i}
@@ -64,11 +64,10 @@ export default async function HouseRulePage({ params }: PageProps) {
                 rule.emphasis ? "bg-clay-pale text-clay" : "bg-sand/60 text-ink"
               }`}
             >
-              <Icon
-                name={rule.emphasis ? "close" : "check"}
-                size={18}
-                strokeWidth={2.2}
-                className={`mt-0.5 shrink-0 ${rule.emphasis ? "text-clay" : "text-forest-light"}`}
+              <span
+                className={`mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full ${
+                  rule.emphasis ? "bg-clay" : "bg-forest-light"
+                }`}
               />
               <span className={`leading-relaxed ${rule.emphasis ? "font-medium" : ""}`}>
                 {rule.text}
