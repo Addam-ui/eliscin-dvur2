@@ -1,13 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type PointerEvent as ReactPointerEvent,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { galleryItems, type GalleryItem } from "@/lib/media";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
@@ -28,13 +22,6 @@ const tileThemes = [
   { from: "#b5623f", to: "#7c3f28", accent: "#f7e6dc" },
   { from: "#6d9a7e", to: "#31503d", accent: "#fbf8f2" },
 ];
-
-/**
- * Kolik pixelů se pointer musí posunout, než to bereme jako tažení
- * a ne jako klik. Míň by na běžné myši/trackpadu občas spolklo klik
- * i bez skutečného úmyslu táhnout.
- */
-const DRAG_THRESHOLD_PX = 12;
 
 /** Dlaždice, která se ukáže, dokud na daném místě chybí skutečná fotka. */
 function PlaceholderTile({ index, label }: { index: number; label: string }) {
@@ -114,45 +101,6 @@ export function Gallery() {
     const track = trackRef.current;
     if (!track) return;
     track.scrollBy({ left: direction * track.clientWidth * 0.82, behavior: "smooth" });
-  }
-
-  /* Tažení myší — dotyk má nativní posun, tady doplňujeme desktop bez trackpadu. */
-  const drag = useRef({ active: false, startX: 0, startLeft: 0, moved: false });
-
-  function onPointerDown(e: ReactPointerEvent<HTMLDivElement>) {
-    if (e.pointerType === "touch") return;
-    const track = trackRef.current;
-    if (!track) return;
-    drag.current = { active: true, startX: e.clientX, startLeft: track.scrollLeft, moved: false };
-    track.style.scrollSnapType = "none";
-    track.setPointerCapture(e.pointerId);
-  }
-
-  function onPointerMove(e: ReactPointerEvent<HTMLDivElement>) {
-    if (!drag.current.active) return;
-    const track = trackRef.current;
-    if (!track) return;
-    const delta = e.clientX - drag.current.startX;
-    if (Math.abs(delta) > DRAG_THRESHOLD_PX) drag.current.moved = true;
-    // Dokud se nepřekročí práh, pás se nehýbe — malé cuknutí ruky při
-    // kliku tak nezpůsobí neúmyslné odjetí pásu o pár pixelů.
-    if (drag.current.moved) {
-      track.scrollLeft = drag.current.startLeft - delta;
-    }
-  }
-
-  function endDrag(e: ReactPointerEvent<HTMLDivElement>) {
-    const track = trackRef.current;
-    if (track) {
-      track.style.scrollSnapType = "";
-      if (track.hasPointerCapture(e.pointerId)) track.releasePointerCapture(e.pointerId);
-    }
-    drag.current.active = false;
-    // Klik na kartu po tažení bereme jako přetažení, ne jako otevření lightboxu.
-    // Reset až po tomto tiku, aby ho stihl zachytit onClick karty.
-    window.setTimeout(() => {
-      drag.current.moved = false;
-    }, 0);
   }
 
   function onTrackKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
@@ -247,25 +195,18 @@ export function Gallery() {
             <div
               ref={trackRef}
               onScroll={updateScrollState}
-              onPointerDown={onPointerDown}
-              onPointerMove={onPointerMove}
-              onPointerUp={endDrag}
-              onPointerLeave={endDrag}
               onKeyDown={onTrackKeyDown}
               tabIndex={0}
               role="region"
               aria-label="Fotografie penzionu"
-              className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-1 pl-1 pr-8 [cursor:grab] active:[cursor:grabbing]"
+              className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-1 pl-1 pr-8"
             >
               {galleryItems.map((item, i) => (
                 <button
                   key={`${item.alt}-${i}`}
                   type="button"
-                  onClick={() => {
-                    if (drag.current.moved) return;
-                    setLightboxIndex(i);
-                  }}
-                  className={`group relative block h-64 shrink-0 snap-start overflow-hidden rounded-2xl bg-forest-deep shadow-soft transition-shadow duration-500 hover:shadow-lift sm:h-80 lg:h-96 ${cardAspectClass[item.aspect]}`}
+                  onClick={() => setLightboxIndex(i)}
+                  className={`group relative block h-64 shrink-0 cursor-pointer snap-start overflow-hidden rounded-2xl bg-forest-deep shadow-soft transition-shadow duration-500 hover:shadow-lift sm:h-80 lg:h-96 ${cardAspectClass[item.aspect]}`}
                   aria-label={`Zvětšit fotku: ${item.alt}`}
                 >
                   {item.src ? (

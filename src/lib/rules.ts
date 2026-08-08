@@ -43,7 +43,6 @@ export const houseRules: HouseRuleDoc[] = [
       { text: "Osoby do 18 let pouze v doprovodu dospělé osoby." },
       { text: "O otevření lamelového krytu bazénu vás poučí majitel." },
       { text: "Před vstupem do vody je nutné se řádně osprchovat." },
-      { text: "Přísný zákaz skákání do bazénu!", emphasis: true },
       { text: "Na vycákanou vodu používejte připravené stěrky." },
       { text: "Na odvlhčovač nepokládejte žádné předměty (např. ručníky)." },
       {
@@ -54,6 +53,9 @@ export const houseRules: HouseRuleDoc[] = [
       {
         text: "Po ukončení koupání je nutné zarolovat krytí bazénu, vložit nádobu s dezinfekcí a vystěrkovat podlahu do kanálků — pokud nedojde k úklidu, bude účtováno zvlášť 200 Kč.",
       },
+      // Obě zvýrazněná pravidla schválně pohromadě na konci, těsně před
+      // závěrečnou poznámkou o postihu — ať to nepůsobí rozházeně.
+      { text: "Přísný zákaz skákání do bazénu!", emphasis: true },
       { text: "U bazénu není možné konzumovat jídlo ani pití.", emphasis: true },
     ],
     closingNote:
