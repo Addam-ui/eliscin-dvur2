@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#16281d"/>
+      <stop offset="34%" stop-color="#2c4a38"/>
+      <stop offset="62%" stop-color="#7c8f6a"/>
+      <stop offset="82%" stop-color="#d8a86b"/>
+      <stop offset="100%" stop-color="#f0c98d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.66" cy="0.74" r="0.42">
+      <stop offset="0%" stop-color="#ffe2ac" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#f0c98d" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#f0c98d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ridgeFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4e6b5c"/>
+      <stop offset="100%" stop-color="#6a8470"/>
+    </linearGradient>
+    <linearGradient id="ridgeMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#31503d"/>
+      <stop offset="100%" stop-color="#3f6149"/>
+    </linearGradient>
+    <linearGradient id="hillNear" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#20372a"/>
+      <stop offset="100%" stop-color="#182a20"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#14231a"/>
+      <stop offset="100%" stop-color="#0e1913"/>
+    </linearGradient>
+    <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/>
+    </filter>
+  </defs>
+
+  <!-- Obloha za svítání -->
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <ellipse cx="1056" cy="666" rx="700" ry="420" fill="url(#glow)"/>
+  <circle cx="1056" cy="648" r="46" fill="#ffe9c2" opacity="0.9"/>
+
+  <!-- Vzdálený hřeben Krkonoš -->
+  <path d="M0 604 L118 556 L214 586 L318 512 L402 560 L498 498 L590 548 L700 486 L806 542 L900 500 L1010 560 L1120 514 L1236 566 L1352 520 L1468 574 L1600 536 L1600 900 L0 900 Z"
+        fill="url(#ridgeFar)" opacity="0.55"/>
+
+  <!-- Mlha v údolí -->
+  <g filter="url(#soften)" opacity="0.4">
+    <ellipse cx="420" cy="632" rx="460" ry="26" fill="#f6efe2"/>
+    <ellipse cx="1180" cy="656" rx="420" ry="22" fill="#f6efe2"/>
+  </g>
+
+  <!-- Střední hřeben -->
+  <path d="M0 668 L142 626 L268 664 L392 606 L520 656 L648 612 L780 662 L910 618 L1046 664 L1178 620 L1310 668 L1444 626 L1600 670 L1600 900 L0 900 Z"
+        fill="url(#ridgeMid)" opacity="0.85"/>
+
+  <!-- Blízké kopce s lesem -->
+  <path d="M0 742 C 210 700, 356 758, 540 730 C 742 700, 900 762, 1090 736 C 1290 708, 1440 756, 1600 728 L1600 900 L0 900 Z"
+        fill="url(#hillNear)"/>
+
+  <!-- Silueta lesa na hřebeni -->
+  <g fill="#152720" opacity="0.9">
+    <path d="M96 730 l13-40 13 40z M126 726 l11-34 11 34z M154 732 l14-44 14 44z M190 728 l10-32 10 32z
+             M640 726 l12-38 12 38z M668 730 l14-42 14 42z M700 724 l10-30 10 30z
+             M1188 730 l13-40 13 40z M1218 726 l11-34 11 34z M1246 732 l14-44 14 44z"/>
+  </g>
+
+  <!-- Statek -->
+  <g fill="#101d16">
+    <path d="M300 812 L300 742 L372 700 L444 742 L444 812 Z"/>
+    <path d="M286 746 L372 692 L458 746 L444 746 L372 704 L300 746 Z"/>
+    <path d="M444 812 L444 764 L520 764 L520 812 Z"/>
+    <path d="M432 768 L482 738 L532 768 L520 768 L482 745 L444 768 Z"/>
+    <rect x="352" y="716" width="14" height="10" rx="2"/>
+  </g>
+  <g fill="#f7d9a0" opacity="0.85">
+    <rect x="322" y="766" width="20" height="24" rx="3"/>
+    <rect x="360" y="766" width="20" height="24" rx="3"/>
+    <rect x="400" y="766" width="20" height="24" rx="3"/>
+    <rect x="470" y="782" width="18" height="20" rx="3"/>
+  </g>
+
+  <!-- Stromy u statku -->
+  <g fill="#0d1811">
+    <path d="M560 812 C 560 760, 596 742, 596 742 C 596 742, 632 760, 632 812 Z"/>
+    <rect x="592" y="800" width="8" height="20"/>
+    <path d="M226 812 C 226 772, 254 756, 254 756 C 254 756, 282 772, 282 812 Z"/>
+    <rect x="250" y="802" width="7" height="16"/>
+  </g>
+
+  <!-- Popředí: louka -->
+  <path d="M0 802 C 260 776, 520 830, 800 806 C 1080 782, 1340 834, 1600 806 L1600 900 L0 900 Z"
+        fill="url(#field)"/>
+
+  <!-- Stébla trávy -->
+  <g stroke="#0a130e" stroke-width="2.5" stroke-linecap="round" opacity="0.75">
+    <path d="M60 900 C 56 862, 68 846, 74 832"/>
+    <path d="M138 900 C 142 866, 130 850, 124 836"/>
+    <path d="M1372 900 C 1368 864, 1380 848, 1386 834"/>
+    <path d="M1460 900 C 1464 868, 1452 852, 1446 838"/>
+  </g>
+
+  <!-- Jemné zrno -->
+  <rect width="1600" height="900" filter="url(#grain)" opacity="0.05"/>
+</svg>

@@ -1,0 +1,12 @@
+# Konfigurace nasazení na Netlify.
+#
+# Next.js rozpozná Netlify automaticky přes @netlify/plugin-nextjs
+# (nainstaluje se sám při prvním nasazení), tenhle soubor jen upřesňuje
+# příkaz pro build. Postup nasazení je v README.md.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

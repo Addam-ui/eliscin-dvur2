@@ -1,0 +1,51 @@
+// Databázové schéma rezervačního systému.
+//
+// Pro nasazení na Vercel přepni `provider` na "postgresql" a nastav
+// DATABASE_URL na připojovací řetězec Postgresu. Žádné jiné změny nejsou
+// potřeba — schéma záměrně nepoužívá typy specifické pro jednu databázi.
+// Postup je popsaný v README.md.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/// Rezervace i ručně blokované termíny. Rozlišuje je pole `status`.
+model Reservation {
+  id String @id @default(cuid())
+
+  // Kontakt na hosta. U ručních blokací od majitelky zůstávají prázdné.
+  name    String
+  email   String
+  phone   String
+  guests  Int    @default(1)
+  message String?
+
+  /// Den příjezdu (včetně). Ukládá se jako půlnoc UTC.
+  arrival DateTime
+  /// Den odjezdu (bez něj) — v ten den se už může ubytovat další host.
+  departure DateTime
+
+  /// pending | confirmed | rejected | blocked
+  status String @default("pending")
+
+  /// web = poptávka z webu, admin = ruční záznam nebo blokace
+  source String @default("web")
+
+  /// Soukromá poznámka majitelky, hostům se nikdy nezobrazuje.
+  note String?
+
+  /// Kdy host odškrtl souhlas se zpracováním osobních údajů. Prázdné
+  /// u ručních záznamů a blokací od majitelky — ty souhlas hosta nemají.
+  consentedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([arrival, departure])
+  @@index([status])
+}
