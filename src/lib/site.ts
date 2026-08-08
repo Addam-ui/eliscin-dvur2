@@ -44,6 +44,7 @@ export const navigation = [
   { label: "Galerie", href: "#galerie" },
   { label: "Ceník", href: "#cenik" },
   { label: "Rezervace", href: "#rezervace" },
+  { label: "Řády", href: "#provozni-rady" },
   { label: "Kontakt", href: "#kontakt" },
 ] as const;
 

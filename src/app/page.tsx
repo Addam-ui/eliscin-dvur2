@@ -7,6 +7,7 @@ import { Gallery } from "@/components/Gallery";
 import { Pricing } from "@/components/Pricing";
 import { Reservation } from "@/components/Reservation";
 import { Reviews } from "@/components/Reviews";
+import { Rules } from "@/components/Rules";
 import { Contact } from "@/components/Contact";
 import { SiteFooter } from "@/components/SiteFooter";
 import { BackToTop } from "@/components/BackToTop";
@@ -25,6 +26,7 @@ export default function HomePage() {
         <Pricing />
         <Reservation />
         <Reviews />
+        <Rules />
         <Contact />
       </main>
 

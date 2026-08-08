@@ -48,7 +48,9 @@ export type IconName =
   | "google"
   | "spinner"
   | "leaf"
-  | "key";
+  | "key"
+  | "document"
+  | "download";
 
 const paths: Record<IconName, React.ReactNode> = {
   /* ---------------- Vybavení areálu ---------------- */
@@ -407,6 +409,22 @@ const paths: Record<IconName, React.ReactNode> = {
       <circle cx="7.5" cy="16.5" r="4" />
       <path d="m10.3 13.7 8-8" />
       <path d="m15.5 8.5 2 2M18 6l2.2 2.2" />
+    </>
+  ),
+
+  document: (
+    <>
+      <path d="M6.5 3.5h7.5l4 4v13a1 1 0 0 1-1 1h-10.5a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1Z" />
+      <path d="M14 3.5v4h4" />
+      <path d="M8.5 12h7M8.5 15.5h7M8.5 18.5h4" />
+    </>
+  ),
+
+  download: (
+    <>
+      <path d="M12 3.5v11.5" />
+      <path d="m7.5 11 4.5 4.5L16.5 11" />
+      <path d="M4.5 17.5v2a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-2" />
     </>
   ),
 };
