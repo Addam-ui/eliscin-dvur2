@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { nightsFromRanges } from "@/lib/calendar";
 import { formatDayCs, nightsBetween, parseDay } from "@/lib/reservations";
 import { contact, reservation as config } from "@/lib/site";
@@ -36,6 +36,21 @@ export function Reservation() {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /*
+   * Potvrzení je mnohem kratší než formulář s kalendářem — jakmile se
+   * po odeslání vymění obsah sekce, stránka se zkrátí a to, co bylo
+   * pod formulářem (recenze), vyjede nahoru pod scroll pozici. Vypadá
+   * to jako by stránka „uskočila" na recenze. Po přepnutí do stavu
+   * „sent" proto sekci vrátíme na vrchol viewportu.
+   */
+  useEffect(() => {
+    if (status === "sent") {
+      sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [status]);
 
   /* Načtení obsazenosti. */
   useEffect(() => {
@@ -141,7 +156,7 @@ export function Reservation() {
 
   if (status === "sent") {
     return (
-      <section id="rezervace" className="bg-cream py-24 sm:py-32">
+      <section ref={sectionRef} id="rezervace" className="bg-cream py-24 sm:py-32">
         <div className="mx-auto max-w-2xl px-5 text-center sm:px-8">
           <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-forest-pale text-forest">
             <Icon name="check" size={38} strokeWidth={2.2} />
@@ -186,7 +201,7 @@ export function Reservation() {
   /* ---------------- Formulář ---------------- */
 
   return (
-    <section id="rezervace" className="bg-cream py-24 sm:py-32">
+    <section ref={sectionRef} id="rezervace" className="bg-cream py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
           eyebrow={config.eyebrow}
