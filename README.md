@@ -92,24 +92,48 @@ v poli `poster`.
    { src: "/gallery/kuchyne.jpg", alt: "Kuchyň s jídelním stolem", aspect: "landscape" },
    ```
 
-- `aspect` — `portrait`, `square` nebo `landscape` (ovlivňuje výšku dlaždice)
-- `alt` — krátký popis, důležitý pro Google i pro čtečky obrazovky
+   - `aspect` — `portrait`, `square` nebo `landscape` (ovlivňuje výšku dlaždice)
+   - `alt` — krátký popis. Nikde se nezobrazuje, ale zůstává v HTML kvůli
+     Googlu a čtečkám obrazovky pro nevidomé — nepřeskakuj ho.
+
+3. Vygeneruj náhled pro pás galerie:
+
+   ```bash
+   npm run gallery:thumbs
+   ```
+
+   Bez tohohle kroku se fotka v pásu nezobrazí — pás totiž nepoužívá
+   originální soubor, ale malý předgenerovaný náhled (viz níž proč).
+   Skript je bezpečné spouštět opakovaně, přeskočí fotky, které náhled
+   už mají.
 
 Položky, které mají `src: null`, zobrazují zástupnou dlaždici. Až budeš mít
-skutečné fotky, stačí `null` nahradit cestou k souboru.
+skutečné fotky, stačí `null` nahradit cestou k souboru a udělat krok 3.
+
+### Proč se v pásu nepoužívají originální fotky
+
+U desítek fotek najednou by prohlížeč při první návštěvě čekal na to, až se
+na serveru zpracuje a zmenší úplně každá z nich zvlášť — to je znát jako
+znatelné zpomalení. Řešení: `npm run gallery:thumbs` předem zmenší všechny
+fotky z `public/gallery/` na malé náhledy (800 px, ~70 kB) uložené
+v `public/gallery/thumbs/` a ty se v pásu použijí místo originálu. Plná
+kvalita fotky se pořád použije, až si ji návštěvník rozklikne.
 
 ### Jak je galerie poskládaná
 
 Galerie je jeden vodorovný pás — žádné kategorie ani záložky, prostě všechny
 fotky za sebou v pořadí, v jakém jsou v `galleryItems`. Klidně tam naházej
 fotky interiéru, exteriéru i okolí pomíchaně, jak se ti to bude hodit.
+Popisky (`alt`) se u fotek v pásu ani v rozkliknutém zobrazení nezobrazují —
+záměrně, aby fotky nic nerušilo.
 
 Prohlíží se:
-- **tažením** myší nebo prstem (na dotykových zařízeních přirozený posun),
+- **přirozeným scrollem/swipem** myší, trackpadem nebo prstem,
 - **šipkami** po stranách (na desktopu, jen když je co posouvat),
 - **klávesnicí** — klikni do pásu a použij šipky doleva/doprava.
 
-Klik na fotku ji zvětší přes celou obrazovku, se šipkami na další/předchozí.
+Klik na fotku ji zvětší přes celou obrazovku. V rozkliknutém zobrazení se
+mezi fotkami dá přepínat i kolečkem myši nebo swipem, ne jen šipkami.
 
 ### Počet fotek
 

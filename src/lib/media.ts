@@ -44,10 +44,25 @@ export interface GalleryItem {
    * Když necháš `null`, vykreslí se zástupná dlaždice a fotka chybí.
    */
   src: string | null;
-  /** Popis fotky — důležitý pro vyhledávače i čtečky obrazovky. */
+  /** Popis fotky — nikde se nezobrazuje, ale zůstává v `alt` atributu
+   *  kvůli přístupnosti a vyhledávačům. */
   alt: string;
   /** Ovlivňuje výšku dlaždice v pásu. */
   aspect: "portrait" | "square" | "landscape";
+}
+
+/**
+ * Cesta k malému předgenerovanému náhledu fotky (pás galerie).
+ *
+ * V pásu se nepoužívá plná fotka přes Next.js optimalizaci — u desítek
+ * fotek najednou by každý unikátní rozměr znamenal vlastní zpracování
+ * na serveru při první návštěvě, což je znatelně pomalé. Náhledy jsou
+ * proto předem zmenšené a uložené jako statické soubory v `public/gallery/thumbs`.
+ * Skript pro jejich vygenerování je popsaný v README.
+ */
+export function thumbSrc(src: string): string {
+  const filename = src.split("/").pop();
+  return `/gallery/thumbs/${filename}`;
 }
 
 /**

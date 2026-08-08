@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { galleryItems, type GalleryItem } from "@/lib/media";
+import { galleryItems, thumbSrc, type GalleryItem } from "@/lib/media";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Icon } from "./Icons";
@@ -210,21 +210,21 @@ export function Gallery() {
                   aria-label={`Zvětšit fotku: ${item.alt}`}
                 >
                   {item.src ? (
-                    <Image
-                      src={item.src}
+                    // Obyčejný <img> na malý předgenerovaný náhled — žádné
+                    // zpracování za běhu, takže se v pásu s desítkami
+                    // fotek načítá hned. Plná kvalita je jen v lightboxu.
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={thumbSrc(item.src)}
                       alt={item.alt}
-                      fill
                       draggable={false}
-                      sizes="(max-width: 640px) 60vw, (max-width: 1024px) 45vw, 30vw"
-                      className="pointer-events-none object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                      className="pointer-events-none h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <PlaceholderTile index={i} label={item.alt} />
                   )}
-
-                  <span className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-forest-deep/95 to-transparent p-4 text-left text-sm font-medium text-cream transition-transform duration-500 group-hover:translate-y-0">
-                    {item.alt}
-                  </span>
 
                   <span className="pointer-events-none absolute right-3 top-3 flex h-8 w-8 scale-75 items-center justify-center rounded-full bg-cream/90 text-forest opacity-0 transition-all duration-[400ms] group-hover:scale-100 group-hover:opacity-100">
                     <Icon name="arrowUpRight" size={16} strokeWidth={2} />
@@ -326,11 +326,8 @@ export function Gallery() {
               )}
             </div>
 
-            <figcaption className="mt-4 flex items-center justify-between gap-4 text-sm text-cream/70">
-              <span>{active.alt}</span>
-              <span className="shrink-0 tabular-nums">
-                {(lightboxIndex ?? 0) + 1} / {galleryItems.length}
-              </span>
+            <figcaption className="mt-4 text-center text-sm tabular-nums text-cream/70">
+              {(lightboxIndex ?? 0) + 1} / {galleryItems.length}
             </figcaption>
           </figure>
         </div>
