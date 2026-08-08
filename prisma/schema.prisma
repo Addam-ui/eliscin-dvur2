@@ -1,16 +1,17 @@
 // Databázové schéma rezervačního systému.
 //
-// Pro nasazení na Vercel přepni `provider` na "postgresql" a nastav
-// DATABASE_URL na připojovací řetězec Postgresu. Žádné jiné změny nejsou
-// potřeba — schéma záměrně nepoužívá typy specifické pro jednu databázi.
-// Postup je popsaný v README.md.
+// Provider je nastavený na Postgres (nasazeno na Netlify DB / Neon).
+// Pro čistě lokální vývoj bez sdílené databáze lze provider přepnout zpět
+// na "sqlite" a DATABASE_URL v .env na "file:./dev.db" — schéma záměrně
+// nepoužívá typy specifické pro jednu databázi. Postup nasazení je
+// popsaný v README.md.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
