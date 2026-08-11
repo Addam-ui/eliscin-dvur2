@@ -96,7 +96,7 @@ v poli `poster`.
    - `alt` — krátký popis. Nikde se nezobrazuje, ale zůstává v HTML kvůli
      Googlu a čtečkám obrazovky pro nevidomé — nepřeskakuj ho.
 
-3. Vygeneruj náhled pro pás galerie:
+3. Vygeneruj náhledy pro galerii:
 
    ```bash
    npm run gallery:thumbs
@@ -116,8 +116,14 @@ U desítek fotek najednou by prohlížeč při první návštěvě čekal na to,
 na serveru zpracuje a zmenší úplně každá z nich zvlášť — to je znát jako
 znatelné zpomalení. Řešení: `npm run gallery:thumbs` předem zmenší všechny
 fotky z `public/gallery/` na malé náhledy (800 px, ~70 kB) uložené
-v `public/gallery/thumbs/` a ty se v pásu použijí místo originálu. Plná
-kvalita fotky se pořád použije, až si ji návštěvník rozklikne.
+v `public/gallery/thumbs/` a ty se v pásu použijí místo originálu.
+
+Stejný skript navíc do `public/gallery/full/` připraví i dvě menší varianty
+fotky (640 a 1280 px) pro rozkliknuté zobrazení. Prohlížeč si přes `srcset`
+sám vybere tu nejmenší, která na danou obrazovku stačí — mobil tak nestahuje
+zbytečně velký soubor. Sousední fotka (další/předchozí) se navíc potichu
+načte do cache hned po otevření, takže přepínání v rozkliknutém zobrazení
+působí okamžitě.
 
 ### Jak je galerie poskládaná
 

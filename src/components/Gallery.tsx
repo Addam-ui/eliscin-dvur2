@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { galleryItems, thumbSrc, type GalleryItem } from "@/lib/media";
+import { fullSrcSet, galleryItems, thumbSrc, type GalleryItem } from "@/lib/media";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { Icon } from "./Icons";
@@ -125,6 +125,24 @@ export function Gallery() {
       return (current + step + total) % total;
     });
   }, []);
+
+  /*
+   * Sousední fotku (vpřed i vzad) načteme do prohlížečové cache dřív, než
+   * na ni host přejde — přepínání pak působí okamžitě místo znovu čekání
+   * na stažení.
+   */
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const total = galleryItems.length;
+
+    [1, -1].forEach((step) => {
+      const item = galleryItems[(lightboxIndex + step + total) % total];
+      if (!item.src) return;
+      const preload = new Image();
+      preload.sizes = "(max-width: 1024px) 100vw, 900px";
+      preload.srcset = fullSrcSet(item.src);
+    });
+  }, [lightboxIndex]);
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -320,6 +338,8 @@ export function Gallery() {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={active.src}
+                  srcSet={fullSrcSet(active.src)}
+                  sizes="(max-width: 1024px) 100vw, 900px"
                   alt={active.alt}
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-contain"

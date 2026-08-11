@@ -1,16 +1,21 @@
 /**
- * Vygeneruje malé náhledy pro pás fotogalerie.
+ * Vygeneruje náhledy pro pás fotogalerie a menší varianty pro lightbox.
  *
  * Použití (po přidání nových fotek do public/gallery/):
  *   npm run gallery:thumbs
  *
- * Galerie v pásu nepoužívá Next.js optimalizaci obrázků za běhu — u desítek
- * fotek najednou by první návštěvník čekal na zpracování každého unikátního
- * rozměru zvlášť. Náhledy jsou proto předgenerované předem jako malé
- * statické soubory v public/gallery/thumbs, které se servírují okamžitě.
- * Plná kvalita fotky se pořád použije v lightboxu po rozkliknutí.
+ * Galerie nepoužívá Next.js optimalizaci obrázků za běhu — u desítek fotek
+ * najednou by první návštěvník čekal na zpracování každého unikátního
+ * rozměru zvlášť. Všechny varianty jsou proto předgenerované předem jako
+ * statické soubory, které se servírují okamžitě:
+ *   - public/gallery/thumbs   — malé náhledy pro pás (800 px)
+ *   - public/gallery/full     — zmenšené varianty pro lightbox (640/1280 px),
+ *                               prohlížeč si přes `srcset` vybere tu, která
+ *                               stačí na velikost obrazovky — mobil tak
+ *                               nestahuje zbytečně velký soubor
+ * Originál v public/gallery/ zůstává jako nejvyšší kvalita pro velké displeje.
  *
- * Skript přeskočí fotky, které už náhled mají a zdrojový soubor se
+ * Skript přeskočí fotky, které už danou variantu mají a zdrojový soubor se
  * od posledního spuštění nezměnil — bezpečné spouštět opakovaně.
  */
 import sharp from "sharp";
@@ -20,12 +25,32 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const SRC_DIR = path.join(ROOT, "public/gallery");
-const OUT_DIR = path.join(ROOT, "public/gallery/thumbs");
+const THUMBS_DIR = path.join(ROOT, "public/gallery/thumbs");
+const FULL_DIR = path.join(ROOT, "public/gallery/full");
 
-const WIDTH = 800;
-const QUALITY = 72;
+/** Každá varianta: kam se uloží, jak se pojmenuje soubor a jak se zpracuje. */
+const variants = [
+  {
+    outDir: THUMBS_DIR,
+    fileName: (base) => `${base}.jpg`,
+    resize: { width: 800 },
+    quality: 72,
+  },
+  {
+    outDir: FULL_DIR,
+    fileName: (base) => `${base}-640.jpg`,
+    resize: { width: 640 },
+    quality: 80,
+  },
+  {
+    outDir: FULL_DIR,
+    fileName: (base) => `${base}-1280.jpg`,
+    resize: { width: 1280 },
+    quality: 80,
+  },
+];
 
-mkdirSync(OUT_DIR, { recursive: true });
+for (const v of variants) mkdirSync(v.outDir, { recursive: true });
 
 const files = readdirSync(SRC_DIR).filter((f) => /\.(jpe?g|png)$/i.test(f));
 
@@ -34,20 +59,25 @@ let skipped = 0;
 
 for (const file of files) {
   const srcPath = path.join(SRC_DIR, file);
-  const outPath = path.join(OUT_DIR, file);
+  const base = file.replace(/\.(jpe?g|png)$/i, "");
+  const srcMtime = statSync(srcPath).mtimeMs;
 
-  if (existsSync(outPath) && statSync(outPath).mtimeMs > statSync(srcPath).mtimeMs) {
-    skipped++;
-    continue;
+  for (const v of variants) {
+    const outPath = path.join(v.outDir, v.fileName(base));
+
+    if (existsSync(outPath) && statSync(outPath).mtimeMs > srcMtime) {
+      skipped++;
+      continue;
+    }
+
+    await sharp(srcPath)
+      .resize({ ...v.resize, withoutEnlargement: true })
+      .jpeg({ quality: v.quality, mozjpeg: true })
+      .toFile(outPath);
+
+    console.log(`vygenerováno: ${path.relative(ROOT, outPath)}`);
+    generated++;
   }
-
-  await sharp(srcPath)
-    .resize({ width: WIDTH, withoutEnlargement: true })
-    .jpeg({ quality: QUALITY, mozjpeg: true })
-    .toFile(outPath);
-
-  console.log(`vygenerováno: ${file}`);
-  generated++;
 }
 
-console.log(`\nHotovo — ${generated} nových náhledů, ${skipped} přeskočeno (už existovaly).`);
+console.log(`\nHotovo — ${generated} nových souborů, ${skipped} přeskočeno (už existovaly).`);

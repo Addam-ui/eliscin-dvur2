@@ -66,6 +66,17 @@ export function thumbSrc(src: string): string {
 }
 
 /**
+ * `srcset` pro plnou fotku v lightboxu — 640 a 1280 px předgenerované
+ * varianty plus originál. Prohlížeč si sám vybere tu nejmenší, která na
+ * danou obrazovku stačí, takže mobil nestahuje zbytečně velký soubor.
+ * Skript pro vygenerování je stejný jako u `thumbSrc`, viz README.
+ */
+export function fullSrcSet(src: string): string {
+  const base = src.replace(/\.(jpe?g|png)$/i, "").split("/").pop();
+  return [`/gallery/full/${base}-640.jpg 640w`, `/gallery/full/${base}-1280.jpg 1280w`, `${src} 1920w`].join(", ");
+}
+
+/**
  * Fotky v galerii — jeden společný pás, bez kategorií.
  *
  * Přidání vlastní fotky:
