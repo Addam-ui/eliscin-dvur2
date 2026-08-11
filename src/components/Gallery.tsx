@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { galleryItems, thumbSrc, type GalleryItem } from "@/lib/media";
 import { Reveal } from "./Reveal";
@@ -314,12 +313,16 @@ export function Gallery() {
               className={`relative w-full overflow-hidden rounded-2xl ${cardAspectClass[active.aspect]} max-h-[75vh]`}
             >
               {active.src ? (
-                <Image
+                // Obyčejný <img> na originální soubor — stejně jako u náhledů
+                // v pásu se tu vyhýbáme Next.js optimalizaci za běhu, která
+                // by u první návštěvy každé fotky znamenala citelné čekání.
+                // Fotky jsou už samy o sobě rozumně velké (kolem 1920 px).
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                   src={active.src}
                   alt={active.alt}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 900px"
-                  className="object-contain"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-contain"
                 />
               ) : (
                 <PlaceholderTile index={lightboxIndex ?? 0} label={active.alt} />
