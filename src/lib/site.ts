@@ -21,7 +21,7 @@ export const contact = {
   country: "Česká republika",
   ico: "46473092",
   phones: ["774 311 421", "774 311 420"],
-  email: "ordinacepetra@seznam.cz",
+  email: "eliscindvur@email.cz",
   /** Přesná poloha statku podle profilu na Google Maps. */
   coords: { lat: 50.4909923, lng: 15.9220008 },
   /** Sdílený odkaz na profil — používá se u mapy a v odkazu na trasu. */
