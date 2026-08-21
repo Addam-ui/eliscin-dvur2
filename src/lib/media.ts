@@ -146,14 +146,20 @@ export const galleryItems: GalleryItem[] = [
   { src: "/gallery/bazen-vnitrni-posezeni.jpg", alt: "Vnitřní bazén s posezením v pozadí", aspect: "portrait" },
   { src: "/gallery/bazen-lehatka-drevena.jpg", alt: "Dřevěná lehátka u bazénu", aspect: "portrait" },
   { src: "/gallery/bazen-mistnost-cela.jpg", alt: "Celý prostor bazénové haly", aspect: "landscape" },
+  { src: "/gallery/bazen-vnitrni-stropni-okna.jpg", alt: "Vnitřní bazén se stropními okny", aspect: "portrait" },
 
   // Sauna
   { src: "/gallery/sauna-drevo-interier.jpg", alt: "Dřevěný interiér sauny", aspect: "portrait" },
+  { src: "/gallery/sauna-kamna-kameny.jpg", alt: "Saunová kamna s kameny", aspect: "portrait" },
 
   // Ložnice
   { src: "/gallery/loznice-venkovska-kvetovana.jpg", alt: "Venkovská ložnice s květovaným povlečením", aspect: "portrait" },
+  { src: "/gallery/loznice-venkovska-pohovka.jpg", alt: "Venkovská ložnice s pohovkou a výhledem z okna", aspect: "portrait" },
   { src: "/gallery/podkrovni-loznice-dve-postele.jpg", alt: "Podkrovní ložnice se dvěma postelemi", aspect: "landscape" },
+  { src: "/gallery/podkrovni-loznice-tri-postele.jpg", alt: "Podkrovní ložnice se třemi postelemi", aspect: "landscape" },
   { src: "/gallery/loznice-postylka-fialova.jpg", alt: "Ložnice s dětskou postýlkou", aspect: "landscape" },
+  { src: "/gallery/loznice-postylka-skrine.jpg", alt: "Ložnice s dětskou postýlkou a šatními skříněmi", aspect: "landscape" },
+  { src: "/gallery/loznice-koupelna-pripojena.jpg", alt: "Ložnice s vlastní koupelnou", aspect: "landscape" },
 
   // Kuchyň a obývací prostory
   { src: "/gallery/kuchyne-obyvaci-kout-podkrovi.jpg", alt: "Kuchyňský a obývací kout v podkroví", aspect: "landscape" },
@@ -161,12 +167,16 @@ export const galleryItems: GalleryItem[] = [
 
   // Společenská místnost
   { src: "/gallery/spolecenska-mistnost-hry.jpg", alt: "Kamenná společenská místnost s hracím koutem", aspect: "landscape" },
+  { src: "/gallery/spolecenska-mistnost-klenba-dvere.jpg", alt: "Kamenná společenská místnost s klenutým stropem", aspect: "landscape" },
 
   // Koupelna
   { src: "/gallery/koupelna-svetla-moderni.jpg", alt: "Světlá moderní koupelna", aspect: "landscape" },
 
   // Venku
   { src: "/gallery/nadvori-balkon-kvetiny.jpg", alt: "Nádvoří s dřevěným balkonem a květinami", aspect: "landscape" },
+  { src: "/gallery/nadvori-pergola-detail.jpg", alt: "Detail dřevěné pergoly s květinami", aspect: "portrait" },
+  { src: "/gallery/nadvori-lavice-roubenka.jpg", alt: "Nádvoří s lavicí a výhledem na roubenku", aspect: "landscape" },
   { src: "/gallery/terasa-lavice-kvetiny.jpg", alt: "Terasa s lavicemi a květinovým záhonem", aspect: "landscape" },
+  { src: "/gallery/terasa-lavice-vyhled-bazen.jpg", alt: "Terasa s výhledem na venkovní bazén a hory", aspect: "landscape" },
   { src: "/gallery/farma-zvirata-pastvina.jpg", alt: "Zvířata na pastvině u statku", aspect: "portrait" },
 ];
