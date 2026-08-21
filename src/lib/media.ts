@@ -21,7 +21,7 @@ export const heroMedia = {
    * Doporučení: 1920×1080, max ~10 MB, 15–25 sekund ve smyčce, BEZ zvuku
    * (video běží automaticky a ztlumeně, zvuk by stejně nehrál).
    */
-  video: null as string | null,
+  video: "/video/hero.mp4" as string | null,
   videoWebm: null as string | null,
 
   /**
@@ -140,4 +140,33 @@ export const galleryItems: GalleryItem[] = [
   { src: "/gallery/letecky-pohled-siroky.jpg", alt: "Široký letecký pohled na okolí statku", aspect: "landscape" },
   { src: "/gallery/letecky-pohled-krajina-2.jpg", alt: "Letecký pohled na krajinu kolem statku", aspect: "landscape" },
   { src: "/gallery/letecky-pohled-zaver.jpg", alt: "Letecký pohled na Eliščin dvůr a okolí", aspect: "landscape" },
+
+  // Bazén
+  { src: "/gallery/bazen-vnitrni-modra-voda.jpg", alt: "Vnitřní bazén s výhledem do zahrady", aspect: "portrait" },
+  { src: "/gallery/bazen-vnitrni-posezeni.jpg", alt: "Vnitřní bazén s posezením v pozadí", aspect: "portrait" },
+  { src: "/gallery/bazen-lehatka-drevena.jpg", alt: "Dřevěná lehátka u bazénu", aspect: "portrait" },
+  { src: "/gallery/bazen-mistnost-cela.jpg", alt: "Celý prostor bazénové haly", aspect: "landscape" },
+
+  // Sauna
+  { src: "/gallery/sauna-drevo-interier.jpg", alt: "Dřevěný interiér sauny", aspect: "portrait" },
+
+  // Ložnice
+  { src: "/gallery/loznice-venkovska-kvetovana.jpg", alt: "Venkovská ložnice s květovaným povlečením", aspect: "portrait" },
+  { src: "/gallery/podkrovni-loznice-dve-postele.jpg", alt: "Podkrovní ložnice se dvěma postelemi", aspect: "landscape" },
+  { src: "/gallery/loznice-postylka-fialova.jpg", alt: "Ložnice s dětskou postýlkou", aspect: "landscape" },
+
+  // Kuchyň a obývací prostory
+  { src: "/gallery/kuchyne-obyvaci-kout-podkrovi.jpg", alt: "Kuchyňský a obývací kout v podkroví", aspect: "landscape" },
+  { src: "/gallery/obyvaci-jidelna-kozena-souprava.jpg", alt: "Obývací pokoj s koženou soupravou a jídelním stolem", aspect: "portrait" },
+
+  // Společenská místnost
+  { src: "/gallery/spolecenska-mistnost-hry.jpg", alt: "Kamenná společenská místnost s hracím koutem", aspect: "landscape" },
+
+  // Koupelna
+  { src: "/gallery/koupelna-svetla-moderni.jpg", alt: "Světlá moderní koupelna", aspect: "landscape" },
+
+  // Venku
+  { src: "/gallery/nadvori-balkon-kvetiny.jpg", alt: "Nádvoří s dřevěným balkonem a květinami", aspect: "landscape" },
+  { src: "/gallery/terasa-lavice-kvetiny.jpg", alt: "Terasa s lavicemi a květinovým záhonem", aspect: "landscape" },
+  { src: "/gallery/farma-zvirata-pastvina.jpg", alt: "Zvířata na pastvině u statku", aspect: "portrait" },
 ];
