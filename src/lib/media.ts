@@ -88,71 +88,68 @@ export function fullSrcSet(src: string): string {
  * žádný limit na počet ani na pořadí tu není.
  */
 export const galleryItems: GalleryItem[] = [
-  { src: "/gallery/letecky-pohled-bazen-zahrada.jpg", alt: "Letecký pohled na bazén a zahradu Eliščina dvora", aspect: "landscape" },
+  // Statek z výšky — na úvod, ať je hned jasné, jak celý areál vypadá
   { src: "/gallery/letecky-pohled-cely-statek.jpg", alt: "Letecký pohled na celý statek Eliščin dvůr", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-dvur-bazen.jpg", alt: "Letecký pohled na dvůr s bazénem", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-okoli.jpg", alt: "Letecký pohled na statek a okolní krajinu", aspect: "landscape" },
+  { src: "/gallery/letecky-pohled-bazen-zahrada.jpg", alt: "Letecký pohled na bazén a zahradu Eliščina dvora", aspect: "landscape" },
+  { src: "/gallery/letecky-pohled-krajina.jpg", alt: "Letecký pohled na statek a krajinu Podkrkonoší", aspect: "landscape" },
+
+  // Zahrada, dvůr a terasy — procházka areálem
   { src: "/gallery/zahrada-posezeni-kamenne.jpg", alt: "Kamenné posezení na zahradě", aspect: "landscape" },
   { src: "/gallery/zahrada-strom-kamenna-zed.jpg", alt: "Zahrada s kamennou zídkou a vzrostlým stromem", aspect: "landscape" },
   { src: "/gallery/zahrada-hriste-altan.jpg", alt: "Zahrada s altánem a hřištěm pro děti", aspect: "landscape" },
   { src: "/gallery/zahrada-bazen-travnik.jpg", alt: "Rozlehlý trávník s bazénem", aspect: "landscape" },
   { src: "/gallery/pergola-gril-posezeni.jpg", alt: "Krytá pergola s grilem a posezením", aspect: "landscape" },
   { src: "/gallery/zahrada-bazen-stromy.jpg", alt: "Zahrada s bazénem obklopená stromy", aspect: "landscape" },
+  { src: "/gallery/zahrada-strom-posezeni.jpg", alt: "Vzrostlý strom a posezení na zahradě", aspect: "landscape" },
+  { src: "/gallery/cesta-zahrada-plot.jpg", alt: "Cesta zahradou k dřevěnému plotu", aspect: "landscape" },
+  { src: "/gallery/fasada-terasa-popinava.jpg", alt: "Fasáda statku s popínavou rostlinou", aspect: "landscape" },
   { src: "/gallery/terasa-zahony-fasada.jpg", alt: "Terasa se záhony před statkem", aspect: "landscape" },
   { src: "/gallery/terasa-statek-fasada.jpg", alt: "Terasa a fasáda statku", aspect: "landscape" },
-  { src: "/gallery/zahrada-strom-posezeni.jpg", alt: "Vzrostlý strom a posezení na zahradě", aspect: "landscape" },
+  { src: "/gallery/terasa-plot-zahrada.jpg", alt: "Terasa s dřevěným plotem", aspect: "landscape" },
+  { src: "/gallery/nadvori-terasa.jpg", alt: "Nádvoří statku", aspect: "landscape" },
+  { src: "/gallery/nadvori-balkon-kvetiny.jpg", alt: "Nádvoří s dřevěným balkonem a květinami", aspect: "landscape" },
+  { src: "/gallery/nadvori-pergola-detail.jpg", alt: "Detail dřevěné pergoly s květinami", aspect: "portrait" },
+  { src: "/gallery/nadvori-lavice-roubenka.jpg", alt: "Nádvoří s lavicí a výhledem na roubenku", aspect: "landscape" },
+  { src: "/gallery/terasa-lavice-kvetiny.jpg", alt: "Terasa s lavicemi a květinovým záhonem", aspect: "landscape" },
+  { src: "/gallery/terasa-lavice-vyhled-bazen.jpg", alt: "Terasa s výhledem na venkovní bazén a hory", aspect: "landscape" },
+  { src: "/gallery/farma-zvirata-pastvina.jpg", alt: "Zvířata na pastvině u statku", aspect: "portrait" },
+  { src: "/gallery/schodiste-terasa.jpg", alt: "Schodiště s výhledem na terasu", aspect: "landscape" },
+
+  // Vstup dovnitř
+  { src: "/gallery/chodba-vstup-terasa.jpg", alt: "Chodba se vstupem na terasu", aspect: "landscape" },
+
+  // Kamenná společenská místnost
   { src: "/gallery/spolecenska-mistnost-krb.jpg", alt: "Kamenná společenská místnost s krbem", aspect: "landscape" },
   { src: "/gallery/spolecenska-mistnost-klenba.jpg", alt: "Klenutá společenská místnost s kamny", aspect: "landscape" },
+  { src: "/gallery/spolecenska-mistnost-hry.jpg", alt: "Kamenná společenská místnost s hracím koutem", aspect: "landscape" },
+  { src: "/gallery/spolecenska-mistnost-klenba-dvere.jpg", alt: "Kamenná společenská místnost s klenutým stropem", aspect: "landscape" },
+
+  // Obývací pokoj
   { src: "/gallery/obyvaci-pokoj-sedaci-souprava.jpg", alt: "Obývací pokoj se sedací soupravou", aspect: "landscape" },
-  { src: "/gallery/loznice-cihlova-zed.jpg", alt: "Ložnice s cihlovou zdí", aspect: "landscape" },
+  { src: "/gallery/obyvaci-jidelna-kozena-souprava.jpg", alt: "Obývací pokoj s koženou soupravou a jídelním stolem", aspect: "portrait" },
+
+  // Jídelna
   { src: "/gallery/jidelna-schodiste-tramy.jpg", alt: "Jídelna s dřevěnými trámy a schodištěm", aspect: "landscape" },
-  { src: "/gallery/kuchyne-jidelni-stul.jpg", alt: "Kuchyň s jídelním stolem", aspect: "landscape" },
-  { src: "/gallery/loznice-vyhled-oken.jpg", alt: "Ložnice s výhledem z okna", aspect: "landscape" },
   { src: "/gallery/jidelna-velka-okna.jpg", alt: "Jídelní kout s velkými okny", aspect: "landscape" },
+  { src: "/gallery/jidelna-mezanin.jpg", alt: "Jídelní stůl pod mezaninem", aspect: "landscape" },
+  { src: "/gallery/jidelna-terasa-dvere.jpg", alt: "Jídelní stůl u dveří na terasu", aspect: "landscape" },
+  { src: "/gallery/jidelna-posuvne-dvere.jpg", alt: "Jídelna s posuvnými dveřmi na terasu", aspect: "landscape" },
+  { src: "/gallery/jidelna-schodiste.jpg", alt: "Jídelní kout se schodištěm", aspect: "landscape" },
+  { src: "/gallery/jidelna-schody-tramy.jpg", alt: "Jídelna s dřevěnými trámy", aspect: "landscape" },
+  { src: "/gallery/jidelna-vyhled-zahradu.jpg", alt: "Jídelní stůl s výhledem do zahrady", aspect: "landscape" },
+
+  // Kuchyně
+  { src: "/gallery/kuchyne-jidelni-stul.jpg", alt: "Kuchyň s jídelním stolem", aspect: "landscape" },
   { src: "/gallery/kuchyne-devena-linka.jpg", alt: "Kuchyň s dřevěnou linkou", aspect: "landscape" },
   { src: "/gallery/kuchyne-cihlova-zed.jpg", alt: "Kuchyň s cihlovou zdí", aspect: "landscape" },
   { src: "/gallery/kuchyne-tramovy-strop.jpg", alt: "Kuchyň s trámovým stropem", aspect: "landscape" },
   { src: "/gallery/kuchyne-spotrebice.jpg", alt: "Plně vybavená kuchyň", aspect: "landscape" },
-  { src: "/gallery/jidelna-mezanin.jpg", alt: "Jídelní stůl pod mezaninem", aspect: "landscape" },
-  { src: "/gallery/podkrovni-loznice-zebrik.jpg", alt: "Podkrovní ložnice s žebříkem", aspect: "landscape" },
-  { src: "/gallery/jidelna-terasa-dvere.jpg", alt: "Jídelní stůl u dveří na terasu", aspect: "landscape" },
-  { src: "/gallery/cesta-zahrada-plot.jpg", alt: "Cesta zahradou k dřevěnému plotu", aspect: "landscape" },
-  { src: "/gallery/fasada-terasa-popinava.jpg", alt: "Fasáda statku s popínavou rostlinou", aspect: "landscape" },
-  { src: "/gallery/nadvori-terasa.jpg", alt: "Nádvoří statku", aspect: "landscape" },
-  { src: "/gallery/jidelna-posuvne-dvere.jpg", alt: "Jídelna s posuvnými dveřmi na terasu", aspect: "landscape" },
-  { src: "/gallery/koupelna-obklady.jpg", alt: "Koupelna s obklady", aspect: "landscape" },
-  { src: "/gallery/jidelna-schodiste.jpg", alt: "Jídelní kout se schodištěm", aspect: "landscape" },
-  { src: "/gallery/pradelna-pracka.jpg", alt: "Prádelna s pračkou", aspect: "landscape" },
-  { src: "/gallery/koupelna-umyvadlo-pracka.jpg", alt: "Koupelna s umyvadlem a pračkou", aspect: "landscape" },
-  { src: "/gallery/chodba-vstup-terasa.jpg", alt: "Chodba se vstupem na terasu", aspect: "landscape" },
-  { src: "/gallery/koupelna-detail.jpg", alt: "Koupelna po rekonstrukci", aspect: "landscape" },
-  { src: "/gallery/koupelna-sprchovy-kout.jpg", alt: "Koupelna se sprchovým koutem", aspect: "landscape" },
-  { src: "/gallery/jidelna-schody-tramy.jpg", alt: "Jídelna s dřevěnými trámy", aspect: "landscape" },
-  { src: "/gallery/jidelna-vyhled-zahradu.jpg", alt: "Jídelní stůl s výhledem do zahrady", aspect: "landscape" },
-  { src: "/gallery/schodiste-terasa.jpg", alt: "Schodiště s výhledem na terasu", aspect: "landscape" },
-  { src: "/gallery/terasa-plot-zahrada.jpg", alt: "Terasa s dřevěným plotem", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-dvur-2.jpg", alt: "Letecký pohled na dvůr a přilehlé zahrady", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-statek-blizsi.jpg", alt: "Letecký pohled na statek zblízka", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-strecha-terasa.jpg", alt: "Letecký pohled na střechu a terasu statku", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-zahrada-stromy.jpg", alt: "Letecký pohled na zahradu se vzrostlými stromy", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-vesnice.jpg", alt: "Letecký pohled na statek v obci Hajnice", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-krajina.jpg", alt: "Letecký pohled na statek a krajinu Podkrkonoší", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-siroky.jpg", alt: "Široký letecký pohled na okolí statku", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-krajina-2.jpg", alt: "Letecký pohled na krajinu kolem statku", aspect: "landscape" },
-  { src: "/gallery/letecky-pohled-zaver.jpg", alt: "Letecký pohled na Eliščin dvůr a okolí", aspect: "landscape" },
-
-  // Bazén
-  { src: "/gallery/bazen-vnitrni-modra-voda.jpg", alt: "Vnitřní bazén s výhledem do zahrady", aspect: "portrait" },
-  { src: "/gallery/bazen-vnitrni-posezeni.jpg", alt: "Vnitřní bazén s posezením v pozadí", aspect: "portrait" },
-  { src: "/gallery/bazen-lehatka-drevena.jpg", alt: "Dřevěná lehátka u bazénu", aspect: "portrait" },
-  { src: "/gallery/bazen-mistnost-cela.jpg", alt: "Celý prostor bazénové haly", aspect: "landscape" },
-  { src: "/gallery/bazen-vnitrni-stropni-okna.jpg", alt: "Vnitřní bazén se stropními okny", aspect: "portrait" },
-
-  // Sauna
-  { src: "/gallery/sauna-drevo-interier.jpg", alt: "Dřevěný interiér sauny", aspect: "portrait" },
-  { src: "/gallery/sauna-kamna-kameny.jpg", alt: "Saunová kamna s kameny", aspect: "portrait" },
+  { src: "/gallery/kuchyne-obyvaci-kout-podkrovi.jpg", alt: "Kuchyňský a obývací kout v podkroví", aspect: "landscape" },
 
   // Ložnice
+  { src: "/gallery/loznice-cihlova-zed.jpg", alt: "Ložnice s cihlovou zdí", aspect: "landscape" },
+  { src: "/gallery/loznice-vyhled-oken.jpg", alt: "Ložnice s výhledem z okna", aspect: "landscape" },
+  { src: "/gallery/podkrovni-loznice-zebrik.jpg", alt: "Podkrovní ložnice s žebříkem", aspect: "landscape" },
   { src: "/gallery/loznice-venkovska-kvetovana.jpg", alt: "Venkovská ložnice s květovaným povlečením", aspect: "portrait" },
   { src: "/gallery/loznice-venkovska-pohovka.jpg", alt: "Venkovská ložnice s pohovkou a výhledem z okna", aspect: "portrait" },
   { src: "/gallery/podkrovni-loznice-dve-postele.jpg", alt: "Podkrovní ložnice se dvěma postelemi", aspect: "landscape" },
@@ -161,22 +158,24 @@ export const galleryItems: GalleryItem[] = [
   { src: "/gallery/loznice-postylka-skrine.jpg", alt: "Ložnice s dětskou postýlkou a šatními skříněmi", aspect: "landscape" },
   { src: "/gallery/loznice-koupelna-pripojena.jpg", alt: "Ložnice s vlastní koupelnou", aspect: "landscape" },
 
-  // Kuchyň a obývací prostory
-  { src: "/gallery/kuchyne-obyvaci-kout-podkrovi.jpg", alt: "Kuchyňský a obývací kout v podkroví", aspect: "landscape" },
-  { src: "/gallery/obyvaci-jidelna-kozena-souprava.jpg", alt: "Obývací pokoj s koženou soupravou a jídelním stolem", aspect: "portrait" },
-
-  // Společenská místnost
-  { src: "/gallery/spolecenska-mistnost-hry.jpg", alt: "Kamenná společenská místnost s hracím koutem", aspect: "landscape" },
-  { src: "/gallery/spolecenska-mistnost-klenba-dvere.jpg", alt: "Kamenná společenská místnost s klenutým stropem", aspect: "landscape" },
-
-  // Koupelna
+  // Koupelny
+  { src: "/gallery/koupelna-obklady.jpg", alt: "Koupelna s obklady", aspect: "landscape" },
+  { src: "/gallery/koupelna-umyvadlo-pracka.jpg", alt: "Koupelna s umyvadlem a pračkou", aspect: "landscape" },
+  { src: "/gallery/koupelna-detail.jpg", alt: "Koupelna po rekonstrukci", aspect: "landscape" },
+  { src: "/gallery/koupelna-sprchovy-kout.jpg", alt: "Koupelna se sprchovým koutem", aspect: "landscape" },
   { src: "/gallery/koupelna-svetla-moderni.jpg", alt: "Světlá moderní koupelna", aspect: "landscape" },
 
-  // Venku
-  { src: "/gallery/nadvori-balkon-kvetiny.jpg", alt: "Nádvoří s dřevěným balkonem a květinami", aspect: "landscape" },
-  { src: "/gallery/nadvori-pergola-detail.jpg", alt: "Detail dřevěné pergoly s květinami", aspect: "portrait" },
-  { src: "/gallery/nadvori-lavice-roubenka.jpg", alt: "Nádvoří s lavicí a výhledem na roubenku", aspect: "landscape" },
-  { src: "/gallery/terasa-lavice-kvetiny.jpg", alt: "Terasa s lavicemi a květinovým záhonem", aspect: "landscape" },
-  { src: "/gallery/terasa-lavice-vyhled-bazen.jpg", alt: "Terasa s výhledem na venkovní bazén a hory", aspect: "landscape" },
-  { src: "/gallery/farma-zvirata-pastvina.jpg", alt: "Zvířata na pastvině u statku", aspect: "portrait" },
+  // Prádelna
+  { src: "/gallery/pradelna-pracka.jpg", alt: "Prádelna s pračkou", aspect: "landscape" },
+
+  // Bazén — vrchol prohlídky na závěr
+  { src: "/gallery/bazen-vnitrni-modra-voda.jpg", alt: "Vnitřní bazén s výhledem do zahrady", aspect: "portrait" },
+  { src: "/gallery/bazen-vnitrni-posezeni.jpg", alt: "Vnitřní bazén s posezením v pozadí", aspect: "portrait" },
+  { src: "/gallery/bazen-vnitrni-stropni-okna.jpg", alt: "Vnitřní bazén se stropními okny", aspect: "portrait" },
+  { src: "/gallery/bazen-lehatka-drevena.jpg", alt: "Dřevěná lehátka u bazénu", aspect: "portrait" },
+  { src: "/gallery/bazen-mistnost-cela.jpg", alt: "Celý prostor bazénové haly", aspect: "landscape" },
+
+  // Sauna
+  { src: "/gallery/sauna-drevo-interier.jpg", alt: "Dřevěný interiér sauny", aspect: "portrait" },
+  { src: "/gallery/sauna-kamna-kameny.jpg", alt: "Saunová kamna s kameny", aspect: "portrait" },
 ];
