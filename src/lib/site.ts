@@ -10,7 +10,8 @@ export const site = {
   tagline: "Rodinný penzion pod Krkonošemi",
   description:
     "Rodinný penzion Eliščin dvůr v Hajnici u Trutnova. Celý statek jen pro vás — bazén, pergola s grilem, hřiště a Krkonoše za humny. Ubytování až pro 16 osob.",
-  url: "https://www.eliscindvur.cz",
+  /** Hlavní adresa webu. Bez „www" — www varianta se na ni sama přesměrovává. */
+  url: "https://eliscindvur.cz",
 } as const;
 
 export const contact = {
