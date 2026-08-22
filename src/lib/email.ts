@@ -21,7 +21,13 @@ function getClient(): Resend | null {
   return client;
 }
 
-/** Odesílací adresa. Bez vlastní ověřené domény funguje Resend sandbox adresa. */
+/**
+ * Odesílací adresa. Bez vlastní ověřené domény funguje Resend sandbox adresa.
+ *
+ * Pozor: schránka na téhle adrese neexistuje, slouží jen k odesílání.
+ * Proto každý e-mail nastavuje `replyTo` na adresu, kam odpověď opravdu
+ * dojde — u upozornění majitelce na hosta, u e-mailů hostovi na penzion.
+ */
 function getFromAddress(): string {
   return process.env.EMAIL_FROM || "Eliščin dvůr <onboarding@resend.dev>";
 }
@@ -128,6 +134,9 @@ export async function sendOwnerNewRequestEmail(data: ReservationEmailData): Prom
     const { error } = await resend.emails.send({
       from: getFromAddress(),
       to: contact.email,
+      // Odpověď na upozornění jde rovnou hostovi — majitelce stačí
+      // v e-mailu kliknout na „Odpovědět".
+      replyTo: data.email,
       subject: `Nová poptávka: ${formatDayCs(data.arrival)} — ${data.name}`,
       html,
       text,
@@ -209,6 +218,8 @@ export async function sendGuestStatusEmail(
     const { error } = await resend.emails.send({
       from: getFromAddress(),
       to: data.email,
+      // Když host na potvrzení odpoví, dorazí to majitelce do schránky.
+      replyTo: contact.email,
       subject: isConfirmed
         ? `Rezervace potvrzena — Eliščin dvůr`
         : `K vaší poptávce — Eliščin dvůr`,
