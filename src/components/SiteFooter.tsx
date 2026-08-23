@@ -24,6 +24,30 @@ export function SiteFooter() {
               objekt — se zahradou, bazénem i klidem, který k tomu patří.
             </p>
 
+            {/* Spřízněná firma ze stejné obce — odkaz je v patičce, takže
+                je dostupný z každé stránky. */}
+            <div className="mt-8">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-gold-light">
+                Doporučujeme
+              </h2>
+              <a
+                href="https://stavbyzahradyjansa.cz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-4 inline-flex items-center gap-2 font-medium text-cream/80 transition-colors hover:text-cream"
+              >
+                Stavby a zahrady Jansa
+                <Icon
+                  name="arrowUpRight"
+                  size={15}
+                  className="text-gold-light/70 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </a>
+              <p className="mt-2 max-w-xs text-sm leading-relaxed text-cream/45">
+                Stavby, zpevněné plochy, ploty a úpravy zahrad v Hajnici a okolí.
+              </p>
+            </div>
+
             <Sprig className="mt-8 h-5 w-28 text-cream/15" />
           </div>
 
@@ -100,8 +124,9 @@ export function SiteFooter() {
 
         {/* Spodní lišta */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-cream/10 py-7 text-sm text-cream/45 sm:flex-row">
-          <p>
+          <p className="text-center sm:text-left">
             © {year} {site.name} · IČO {contact.ico}
+            <span className="mt-1 block text-cream/35 sm:mt-0.5">Realizace: Adam Vojtěch</span>
           </p>
 
           <div className="flex items-center gap-6">
