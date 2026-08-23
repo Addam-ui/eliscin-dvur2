@@ -183,25 +183,31 @@ export function SiteHeader() {
       {/* Mobilní menu */}
       <div
         id="mobilni-menu"
-        className={`fixed inset-0 z-40 bg-forest-deep transition-[opacity,visibility] duration-[400ms] xl:hidden ${
+        /* Výška podle `dvh`, ne podle celého okna — na mobilu jinak menu
+           zasahuje pod lištu prohlížeče a spodek obsahu je nedostupný. */
+        className={`fixed inset-x-0 top-0 z-40 h-[100dvh] bg-forest-deep transition-[opacity,visibility] duration-[400ms] xl:hidden ${
           menuOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div className="grain relative flex h-full flex-col justify-center px-8 pb-16 pt-24">
-          <nav className="flex flex-col gap-1" aria-label="Mobilní navigace">
+        {/* Obsah se scrolluje, pokud se na krátký displej nevejde, a `m-auto`
+            ho zároveň vycentruje, když místa dost je. Samotné `justify-center`
+            by při přetečení uřízlo okraje bez možnosti doscrollovat. */}
+        <div className="grain relative flex h-full flex-col overflow-y-auto px-8 pb-10 pt-20">
+          <div className="m-auto w-full">
+            <nav className="flex flex-col gap-0.5" aria-label="Mobilní navigace">
             {navigation.map((item, i) => (
               <Link
                 key={item.href}
                 href={`/${item.href}`}
                 onClick={() => setMenuOpen(false)}
-                className="group flex items-center justify-between border-b border-white/10 py-4 transition-all duration-500"
+                className="group flex items-center justify-between border-b border-white/10 py-2.5 transition-all duration-500"
                 style={{
                   transitionDelay: menuOpen ? `${100 + i * 55}ms` : "0ms",
                   opacity: menuOpen ? 1 : 0,
                   transform: menuOpen ? "none" : "translateY(14px)",
                 }}
               >
-                <span className="font-display text-3xl text-cream">{item.label}</span>
+                <span className="font-display text-2xl text-cream sm:text-3xl">{item.label}</span>
                 <Icon
                   name="arrowRight"
                   size={20}
@@ -212,7 +218,7 @@ export function SiteHeader() {
           </nav>
 
           <div
-            className="mt-10 space-y-3 transition-all duration-500"
+            className="mt-6 space-y-2.5 transition-all duration-500"
             style={{
               transitionDelay: menuOpen ? `${100 + navigation.length * 55}ms` : "0ms",
               opacity: menuOpen ? 1 : 0,
@@ -235,6 +241,7 @@ export function SiteHeader() {
               <Icon name="mail" size={18} className="text-forest-light" />
               {contact.email}
             </a>
+            </div>
           </div>
         </div>
       </div>
