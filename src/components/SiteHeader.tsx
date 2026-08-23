@@ -75,12 +75,16 @@ export function SiteHeader() {
             : "border-b border-transparent py-5"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
+        {/* Na úzkých displejích musí vedle sebe vyjít logo, tlačítko rezervace
+            i hamburger — proto menší mezery a odsazení než na širších. */}
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:gap-6 sm:px-8">
           {/* Logo */}
           <Link
             href="/#uvod"
             onClick={() => setMenuOpen(false)}
-            className="relative block shrink-0 transition-transform duration-300 hover:scale-[1.03]"
+            /* Logo smí ustoupit, když je málo místa — tlačítko rezervace
+               a hamburger mají přednost a nesmí se vytlačit z obrazovky. */
+            className="relative block min-w-0 shrink transition-transform duration-300 hover:scale-[1.03]"
             aria-label={`${"Eliščin dvůr"} — úvodní stránka`}
           >
             <Image
@@ -89,7 +93,7 @@ export function SiteHeader() {
               width={370}
               height={86}
               priority
-              className={`w-auto transition-all duration-500 ${solid ? "h-9" : "h-11"}`}
+              className={`w-auto max-w-full object-contain object-left transition-all duration-500 ${solid ? "h-8 sm:h-9" : "h-8 sm:h-11"}`}
             />
           </Link>
 
@@ -137,17 +141,19 @@ export function SiteHeader() {
             <Link
               href="/#rezervace"
               onClick={() => setMenuOpen(false)}
-              className={`group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shadow-soft transition-all duration-300 hover:shadow-lift ${
+              className={`group inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold shadow-soft transition-all duration-300 hover:shadow-lift sm:px-5 ${
                 solid
                   ? "bg-forest text-cream hover:bg-forest-deep"
                   : "bg-cream/95 text-forest-deep hover:bg-white"
               }`}
             >
               Rezervovat
+              {/* Šipka až od širších displejů — na mobilu je místo potřeba
+                  pro hamburger, který se jinak nevejde na obrazovku. */}
               <Icon
                 name="arrowRight"
                 size={16}
-                className="transition-transform duration-300 group-hover:translate-x-0.5"
+                className="hidden transition-transform duration-300 group-hover:translate-x-0.5 sm:block"
               />
             </Link>
 
@@ -158,8 +164,14 @@ export function SiteHeader() {
               aria-expanded={menuOpen}
               aria-controls="mobilni-menu"
               aria-label={menuOpen ? "Zavřít menu" : "Otevřít menu"}
-              className={`inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-300 xl:hidden ${
-                solid ? "text-ink hover:bg-sand" : "text-white hover:bg-white/15"
+              /* Nad hero videem má tlačítko vlastní tmavý podklad s obrysem —
+                 samotná bílá ikona splývala se světlými záběry ve videu.
+                 Hover se na dotykovém displeji nikdy nespustí, takže
+                 viditelnost nesmí stát na něm. */
+              className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-colors duration-300 xl:hidden ${
+                solid
+                  ? "text-ink hover:bg-sand"
+                  : "bg-forest-deep/50 text-white ring-1 ring-white/30 backdrop-blur-sm hover:bg-forest-deep/70"
               }`}
             >
               <Icon name={menuOpen ? "close" : "menu"} size={22} />
