@@ -8,7 +8,7 @@ import {
   shiftMonth,
   WEEKDAYS_CS,
 } from "@/lib/calendar";
-import { toDayString, today } from "@/lib/reservations";
+import { addDays, parseDay, toDayString, today } from "@/lib/reservations";
 import { Icon } from "./Icons";
 
 export interface DateRange {
@@ -25,6 +25,26 @@ interface CalendarProps {
   onChange: (range: DateRange) => void;
   /** Kolik měsíců vedle sebe na širokých obrazovkách. */
   months?: 1 | 2;
+}
+
+/* Barvy půlek dne. Musí sedět s tokeny v globals.css. */
+const OCCUPIED = "#f7e6dc"; // clay-pale
+const PENDING = "rgba(227, 200, 135, 0.4)"; // gold-light
+const FREE = "transparent";
+
+/**
+ * Pozadí dne rozdělené úhlopříčkou na dopoledne a odpoledne.
+ *
+ * Rezervace končí ráno a začíná odpoledne, takže v den střídání je půl
+ * dne obsazená a půl volná — právě to úhlopříčka ukazuje. Levý horní
+ * trojúhelník je dopoledne, pravý dolní odpoledne.
+ */
+function dayBackground(morning: string, afternoon: string): string | undefined {
+  if (morning === FREE && afternoon === FREE) return undefined;
+  if (morning === afternoon) return morning;
+
+  // Tenká linka uprostřed, ať je předěl znát i mezi světlými odstíny.
+  return `linear-gradient(135deg, ${morning} 0 calc(50% - 1px), var(--color-linen) calc(50% - 1px) calc(50% + 1px), ${afternoon} calc(50% + 1px) 100%)`;
 }
 
 export function Calendar({
@@ -83,23 +103,53 @@ export function Calendar({
 
   function dayState(key: string, outside: boolean) {
     const isPast = key < todayKey;
-    const isOccupied = occupiedNights.has(key);
-    const isPending = pendingNights?.has(key) ?? false;
+    const prevKey = toDayString(addDays(parseDay(key), -1));
+
+    /* Noc začínající tímhle dnem = odpoledne obsazené.
+       Noc předchozí = obsazené dopoledne, host odjíždí až ráno. */
+    const nightBooked = occupiedNights.has(key);
+    const morningBooked = occupiedNights.has(prevKey);
+    const nightPending = pendingNights?.has(key) ?? false;
+    const morningPending = pendingNights?.has(prevKey) ?? false;
 
     const rangeEnd = value.departure ?? previewEnd;
     const inRange =
       value.arrival && rangeEnd ? key > value.arrival && key < rangeEnd : false;
 
+    /* Na obsazený den se dá odjet — noc před ním je totiž volná.
+       Jen na něj nejde přijet, protože ta noc už patří někomu jinému. */
+    const choosingDeparture = Boolean(value.arrival && !value.departure);
+    const canBeDeparture =
+      choosingDeparture &&
+      key > value.arrival! &&
+      isRangeFree(value.arrival!, key, occupiedNights);
+
     return {
       isPast,
-      isOccupied,
-      isPending,
+      nightBooked,
+      morningBooked,
+      nightPending,
+      morningPending,
       isArrival: key === value.arrival,
       isDeparture: key === value.departure,
       inRange,
-      // Den odjezdu předchozí rezervace zůstává volný pro nový příjezd.
-      disabled: outside || isPast || isOccupied,
+      disabled: outside || isPast || (nightBooked && !canBeDeparture),
     };
+  }
+
+  /** Popisek, který se ukáže po najetí na den. */
+  function dayHint(s: ReturnType<typeof dayState>): string {
+    if (s.isArrival) return "Váš příjezd";
+    if (s.isDeparture) return "Váš odjezd";
+    if (s.isPast) return "Termín už proběhl";
+    if (s.inRange) return "Součást pobytu";
+
+    if (s.nightBooked && s.morningBooked) return "Obsazeno";
+    if (s.morningBooked) return "Odjezd hosta — můžete přijet";
+    if (s.nightBooked) return "Příjezd hosta — můžete sem doodjet";
+
+    if (s.nightPending || s.morningPending) return "Čeká na potvrzení";
+    return "Volno";
   }
 
   return (
@@ -154,34 +204,49 @@ export function Calendar({
 
             <div className="grid grid-cols-7 gap-1" onMouseLeave={() => setHovered(null)}>
               {buildMonthGrid(m.year, m.month).map((day) => {
-                const state = dayState(day.key, day.outside);
-
                 if (day.outside) {
                   return <div key={day.key} aria-hidden="true" />;
                 }
 
+                const state = dayState(day.key, day.outside);
+                const hint = dayHint(state);
+                const selected = state.isArrival || state.isDeparture;
+
                 const classes = [
-                  "relative flex h-11 items-center justify-center rounded-lg text-sm font-medium transition-all duration-200",
+                  "group relative flex h-11 items-center justify-center rounded-lg text-sm font-medium transition-all duration-200",
                 ];
 
-                if (state.disabled) {
-                  classes.push("cursor-not-allowed");
-                  classes.push(
-                    state.isOccupied
-                      ? "bg-clay-pale text-clay/50 line-through"
-                      : "text-ink-faint/40",
-                  );
-                } else if (state.isArrival || state.isDeparture) {
+                /* Vlastní pozadí jen tam, kde se kreslí půlky dne — výběr
+                   a zvýraznění rozsahu mají přednost a řeší se třídami. */
+                let background: string | undefined;
+
+                if (selected) {
                   classes.push("bg-forest text-cream shadow-soft");
                 } else if (state.inRange) {
                   classes.push("bg-forest-pale text-forest");
-                } else if (state.isPending) {
-                  classes.push(
-                    "bg-gold-light/25 text-ink hover:bg-forest-pale hover:text-forest",
-                  );
                 } else {
-                  classes.push("text-ink hover:bg-forest-pale hover:text-forest");
+                  const morning = state.morningBooked
+                    ? OCCUPIED
+                    : state.morningPending
+                      ? PENDING
+                      : FREE;
+                  const afternoon = state.nightBooked
+                    ? OCCUPIED
+                    : state.nightPending
+                      ? PENDING
+                      : FREE;
+                  background = dayBackground(morning, afternoon);
+
+                  classes.push(
+                    state.disabled
+                      ? state.isPast
+                        ? "text-ink-faint/40"
+                        : "text-clay/60"
+                      : "text-ink hover:ring-2 hover:ring-inset hover:ring-forest-light",
+                  );
                 }
+
+                if (state.disabled) classes.push("cursor-not-allowed");
 
                 return (
                   <button
@@ -191,23 +256,25 @@ export function Calendar({
                     onClick={() => handleSelect(day.key)}
                     onMouseEnter={() => setHovered(day.key)}
                     onFocus={() => setHovered(day.key)}
-                    aria-label={`${day.dayOfMonth}. ${monthLabel(m.year, m.month)}${
-                      state.isOccupied ? " — obsazeno" : ""
-                    }`}
-                    aria-pressed={state.isArrival || state.isDeparture}
+                    style={background ? { background } : undefined}
+                    aria-label={`${day.dayOfMonth}. ${monthLabel(m.year, m.month)} — ${hint}`}
+                    aria-pressed={selected}
                     className={classes.join(" ")}
                   >
-                    {day.dayOfMonth}
+                    <span className="relative z-10">{day.dayOfMonth}</span>
 
                     {day.key === todayKey && (
-                      <span className="absolute bottom-1.5 h-1 w-1 rounded-full bg-clay" />
+                      <span className="absolute bottom-1.5 z-10 h-1 w-1 rounded-full bg-clay" />
                     )}
-                    {state.isPending && !state.isOccupied && (
-                      <span
-                        className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-gold"
-                        title="Čeká na potvrzení"
-                      />
-                    )}
+
+                    {/* Popisek po najetí. `pointer-events-none`, aby nebránil
+                        kliknutí na den pod ním. */}
+                    <span
+                      role="tooltip"
+                      className="pointer-events-none absolute bottom-full left-1/2 z-30 mb-1.5 hidden -translate-x-1/2 whitespace-nowrap rounded-lg bg-forest-deep px-2.5 py-1.5 text-xs font-medium text-cream opacity-0 shadow-lift transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 sm:block"
+                    >
+                      {hint}
+                    </span>
                   </button>
                 );
               })}
@@ -224,6 +291,13 @@ export function Calendar({
         <span className="flex items-center gap-2">
           <span className="h-3.5 w-3.5 rounded bg-clay-pale ring-1 ring-inset ring-clay/25" />{" "}
           Obsazeno
+        </span>
+        <span className="flex items-center gap-2">
+          <span
+            className="h-3.5 w-3.5 rounded ring-1 ring-inset ring-clay/25"
+            style={{ background: dayBackground(OCCUPIED, FREE) }}
+          />{" "}
+          Odjezd — půl dne volno
         </span>
         <span className="flex items-center gap-2">
           <span className="h-3.5 w-3.5 rounded bg-gold-light/40" /> Čeká na potvrzení

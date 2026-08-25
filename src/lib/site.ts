@@ -254,14 +254,6 @@ export const pricing = {
   /** `highlight: true` zvýrazní kartu jako doporučenou. */
   plans: [
     {
-      name: "Týden do 10 osob",
-      price: 35000,
-      unit: "za týden",
-      note: "Sobota — sobota",
-      description: "Celý objekt na sedm nocí pro menší skupinu.",
-      highlight: false,
-    },
-    {
       name: "Týden do 16 osob",
       price: 42000,
       unit: "za týden",
