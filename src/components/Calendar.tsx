@@ -145,8 +145,8 @@ export function Calendar({
     if (s.inRange) return "Součást pobytu";
 
     if (s.nightBooked && s.morningBooked) return "Obsazeno";
-    if (s.morningBooked) return "Odjezd hosta — můžete přijet";
-    if (s.nightBooked) return "Příjezd hosta — můžete sem doodjet";
+    if (s.morningBooked) return "Odjezd hosta";
+    if (s.nightBooked) return "Příjezd hosta";
 
     if (s.nightPending || s.morningPending) return "Čeká na potvrzení";
     return "Volno";
@@ -291,13 +291,6 @@ export function Calendar({
         <span className="flex items-center gap-2">
           <span className="h-3.5 w-3.5 rounded bg-clay-pale ring-1 ring-inset ring-clay/25" />{" "}
           Obsazeno
-        </span>
-        <span className="flex items-center gap-2">
-          <span
-            className="h-3.5 w-3.5 rounded ring-1 ring-inset ring-clay/25"
-            style={{ background: dayBackground(OCCUPIED, FREE) }}
-          />{" "}
-          Odjezd — půl dne volno
         </span>
         <span className="flex items-center gap-2">
           <span className="h-3.5 w-3.5 rounded bg-gold-light/40" /> Čeká na potvrzení
